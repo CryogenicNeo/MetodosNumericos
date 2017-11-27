@@ -18,7 +18,6 @@ function x = Biseccion (str, limSup, limInf, tol)
             limSup = x;
         end
     end
-    
-        
+     
     fprintf('\n Respuesta \n %10.5f', x)
 end

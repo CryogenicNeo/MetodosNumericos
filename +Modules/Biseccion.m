@@ -1,7 +1,10 @@
-function x = Biseccion (str, limSup, limInf)
+function x = Biseccion (str, limSup, limInf, tol)
     f = str2func(str);
-    tol = 1e-3;
     error = limSup - limInf;
+    
+    if nargin < 4
+        tol = 1e-3;
+    end
     
     while error >= tol
         error = limSup - limInf;

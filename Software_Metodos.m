@@ -22,7 +22,7 @@ function varargout = Software_Metodos(varargin)
 
 % Edit the above text to modify the response to help Software_Metodos
 
-% Last Modified by GUIDE v2.5 13-Nov-2017 21:52:58
+% Last Modified by GUIDE v2.5 26-Nov-2017 23:31:11
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -64,15 +64,13 @@ set(handles.gauss_jordan,'visible','off')
 set(handles.jacobi,'visible','off')
 set(handles.gauss_seidel,'visible','off')
 set(handles.crout,'visible','off')
-set(handles.ncotes,'visible','off')
+set(handles.cholesky,'visible','off')
+set(handles.trapecio,'visible','off')
 set(handles.s13,'visible','off')
 set(handles.s38,'visible','off')
 set(handles.euler,'visible','off')
 set(handles.rk,'visible','off')
-set(handles.entrada,'visible','off')
-set(handles.entrada2,'visible','off')
-set(handles.texto1,'visible','off')
-set(handles.texto2,'visible','off')
+
 
 
 % UIWAIT makes Software_Metodos wait for user response (see UIRESUME)
@@ -102,16 +100,12 @@ switch v
         set(handles.jacobi,'visible','off')
         set(handles.gauss_seidel,'visible','off')
         set(handles.crout,'visible','off')
-        set(handles.ncotes,'visible','off')
+        set(handles.cholesky,'visible','off')
+        set(handles.trapecio,'visible','off')
         set(handles.s13,'visible','off')
         set(handles.s38,'visible','off')
         set(handles.euler,'visible','off')
         set(handles.rk,'visible','off')
-        set(handles.entrada,'visible','off')
-        set(handles.entrada2,'visible','off')
-        set(handles.texto,'String','1');
-        set(handles.texto1,'visible','off')
-        set(handles.texto2,'visible','off')
 
     case 2
         set(handles.biseccion,'visible','on')
@@ -121,16 +115,13 @@ switch v
         set(handles.jacobi,'visible','off')
         set(handles.gauss_seidel,'visible','off')
         set(handles.crout,'visible','off')
-        set(handles.ncotes,'visible','off')
+        set(handles.cholesky,'visible','off')
+        set(handles.trapecio,'visible','off')
         set(handles.s13,'visible','off')
         set(handles.s38,'visible','off')
         set(handles.euler,'visible','off')
         set(handles.rk,'visible','off')
-        set(handles.entrada,'visible','on')
-        set(handles.entrada2,'visible','on')
-        set(handles.texto,'String','2');
-        set(handles.texto1,'visible','on')
-        set(handles.texto2,'visible','on')
+       
     case 3
         set(handles.biseccion,'visible','off')
         set(handles.punto_fijo,'visible','off')
@@ -139,16 +130,13 @@ switch v
         set(handles.jacobi,'visible','on')
         set(handles.gauss_seidel,'visible','on')
         set(handles.crout,'visible','on')
-        set(handles.ncotes,'visible','off')
+        set(handles.cholesky,'visible','on')
+        set(handles.trapecio,'visible','off')
         set(handles.s13,'visible','off')
         set(handles.s38,'visible','off')
         set(handles.euler,'visible','off')
         set(handles.rk,'visible','off')
-        set(handles.entrada,'visible','on')
-        set(handles.entrada2,'visible','off')
-        set(handles.texto,'String','3');
-        set(handles.texto1,'visible','on')
-        set(handles.texto2,'visible','off')
+       
     case 4
         set(handles.biseccion,'visible','off')
         set(handles.punto_fijo,'visible','off')
@@ -157,16 +145,13 @@ switch v
         set(handles.jacobi,'visible','off')
         set(handles.gauss_seidel,'visible','off')
         set(handles.crout,'visible','off')
-        set(handles.ncotes,'visible','on')
+        set(handles.cholesky,'visible','off')
+        set(handles.trapecio,'visible','on')
         set(handles.s13,'visible','on')
         set(handles.s38,'visible','on')
         set(handles.euler,'visible','off')
         set(handles.rk,'visible','off')
-        set(handles.entrada,'visible','on')
-        set(handles.entrada2,'visible','off')
-        set(handles.texto,'String','4');
-        set(handles.texto1,'visible','on')
-        set(handles.texto2,'visible','off')
+        
     case 5
         set(handles.biseccion,'visible','off')
         set(handles.punto_fijo,'visible','off')
@@ -175,16 +160,12 @@ switch v
         set(handles.jacobi,'visible','off')
         set(handles.gauss_seidel,'visible','off')
         set(handles.crout,'visible','off')
-        set(handles.ncotes,'visible','off')
+        set(handles.cholesky,'visible','off')
+        set(handles.trapecio,'visible','off')
         set(handles.s13,'visible','off')
         set(handles.s38,'visible','off')
         set(handles.euler,'visible','on')
         set(handles.rk,'visible','on')
-        set(handles.entrada,'visible','on')
-        set(handles.entrada2,'visible','off')
-        set(handles.texto,'String','5');
-        set(handles.texto1,'visible','on')
-        set(handles.texto2,'visible','off')
 end
 % hObject    handle to Menu (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -196,26 +177,7 @@ end
 
 % --- Executes on button press in biseccion.
 function biseccion_Callback(hObject, eventdata, handles)
-clc
-functionf=inline(get(handles.entrada,'String'));
-par=str2num(get(handles.entrada2,'String'));
-x0=par(1);
-x1=par(2);
-tol=0.0001;
-if feval(functionf,x0)*feval(functionf,x1)<0
-    x=x0;
-    while abs(feval(functionf,x))> tol
-        x=(x0+x1)/2;    
-        if feval(functionf,x0)*feval(functionf,x)<0
-            x1=x;
-        else
-            x0=x;
-        end
-    end
-    set(handles.texto,'String',['La raiz es: ' num2str(x)]);
-else
-    set(handles.texto,'String','No se encontró raiz');
-end
+biseccion
 % hObject    handle to biseccion (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -223,7 +185,7 @@ end
 
 % --- Executes on button press in punto_fijo.
 function punto_fijo_Callback(hObject, eventdata, handles)
-matrix=get(handles.entrada,'String')
+punto_fijo
 % hObject    handle to punto_fijo (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -231,6 +193,7 @@ matrix=get(handles.entrada,'String')
 
 % --- Executes on button press in nr.
 function nr_Callback(hObject, eventdata, handles)
+newton_raphson
 % hObject    handle to nr (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -238,12 +201,14 @@ function nr_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in gauss_jordan.
 function gauss_jordan_Callback(hObject, eventdata, handles)
+gauss_jordan
 % hObject    handle to gauss_jordan (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
 % --- Executes on button press in jacobi.
 function jacobi_Callback(hObject, eventdata, handles)
+jacobi
 % hObject    handle to jacobi (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -251,6 +216,7 @@ function jacobi_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in gauss_seidel.
 function gauss_seidel_Callback(hObject, eventdata, handles)
+gauss_seidel
 % hObject    handle to gauss_seidel (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -258,20 +224,31 @@ function gauss_seidel_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in crout.
 function crout_Callback(hObject, eventdata, handles)
+crout
 % hObject    handle to crout (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-% --- Executes on button press in ncotes.
+% --- Executes on button press in trapecio.
 
 
-function ncotes_Callback(hObject, eventdata, handles)
-% hObject    handle to ncotes (see GCBO)
+% --- Executes on button press in cholesky.
+function cholesky_Callback(hObject, eventdata, handles)
+cholesky
+% hObject    handle to cholesky (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+function trapecio_Callback(hObject, eventdata, handles)
+trapecio
+% hObject    handle to trapecio (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
 
 % --- Executes on button press in s13.
 function s13_Callback(hObject, eventdata, handles)
+s13
 % hObject    handle to s13 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -279,6 +256,7 @@ function s13_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in s38.
 function s38_Callback(hObject, eventdata, handles)
+s38
 % hObject    handle to s38 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -286,6 +264,7 @@ function s38_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in euler.
 function euler_Callback(hObject, eventdata, handles)
+euler
 % hObject    handle to euler (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
@@ -293,22 +272,10 @@ function euler_Callback(hObject, eventdata, handles)
 
 % --- Executes on button press in rk.
 function rk_Callback(hObject, eventdata, handles)
+runge_kutta
 % hObject    handle to rk (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
-
-% --- Executes during object creation, after setting all properties.
-function entrada_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to entrada (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
 
 
 % --- Executes during object creation, after setting all properties.
@@ -318,32 +285,6 @@ function Menu_CreateFcn(hObject, eventdata, handles)
 % handles    empty - handles not created until after all CreateFcns called
 
 % Hint: popupmenu controls usually have a white background on Windows.
-%       See ISPC and COMPUTER.
-if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
-    set(hObject,'BackgroundColor','white');
-end
-
-
-function entrada_Callback(hObject, eventdata, handles)
-
-
-
-function entrada2_Callback(hObject, eventdata, handles)
-% hObject    handle to entrada2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-
-% Hints: get(hObject,'String') returns contents of entrada2 as text
-%        str2double(get(hObject,'String')) returns contents of entrada2 as a double
-
-
-% --- Executes during object creation, after setting all properties.
-function entrada2_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to entrada2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    empty - handles not created until after all CreateFcns called
-
-% Hint: edit controls usually have a white background on Windows.
 %       See ISPC and COMPUTER.
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');

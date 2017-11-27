@@ -1,4 +1,4 @@
-function Simpson_13 (str, limSup, limInf, inter)
+function x = Simpson_13 (str, limSup, limInf, inter)
     f = str2func(str);
 
     if nargin < 4

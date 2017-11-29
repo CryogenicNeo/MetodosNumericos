@@ -9,17 +9,6 @@ function x = Seidel (A, B, x, tol)
     if size(tol) == size(ones(1, 1))
         tol = tol * ones(1, n);
     end
-    %it = input('¿Cuantas iteraciones del metodo desea realizar? \n');
-
-%     Dominante = zeros(n);
-%     while (Dominante ~= ones(n))
-%         for i = 1 : n
-%             Dominante(i) = (2 * abs(A(i, i)) > sum(abs(A(i, :))));
-%         end
-%         if (Dominante ~= ones(n))
-%             disp('\nLa matriz no es dominante, intente organizar los valores para crear la matriz dominante. ')
-%         end
-%     end
 
     cond = 1;
     while or(error > tol, cond)
